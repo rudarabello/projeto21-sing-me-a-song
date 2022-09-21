@@ -55,7 +55,7 @@ npm start
 npm run build
 ```
 
-6. Finally access `http://localhost:5000` on your browser (port number may vary in some cases)
+6. Finally access `http://localhost:3000` on your browser (port number may vary in some cases)
 
 
 ## How to run the tests
