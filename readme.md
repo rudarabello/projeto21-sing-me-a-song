@@ -4,10 +4,10 @@ Sing me a Song is a application for videos recommendations. The recommendation i
 
 ## Implemented features
 
-- Add a new music recommendation
-- Like or dislike (up or down vote)
-- Get a list with the videos with the hightest scores
-- Get a random video recommendation
+-   Add a new music recommendation
+-   Like or dislike (up or down vote)
+-   Get a list with the videos with the hightest scores
+-   Get a random video recommendation
 
 ## Technologies
 
@@ -56,7 +56,6 @@ npm run build
 ```
 
 6. Finally access `http://localhost:3000` on your browser (port number may vary in some cases)
-
 
 ## How to run the tests
 
