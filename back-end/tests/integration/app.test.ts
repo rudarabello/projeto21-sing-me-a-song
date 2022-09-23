@@ -86,35 +86,76 @@ describe("POST /recommendations/:id/downvote tests", () => {
     });
 });
 
-// describe("GET /top/:amount tests", () => {
-//     beforeEach(async () => {
-//         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
-//     });
-//     afterAll(async () => {
-//         await prisma.$disconnect();
-//     });
+describe("GET /recommendations tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
 
-// });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
 
-// describe("GET /:id tests", () => {
-//     beforeEach(async () => {
-//         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
-//     });
-//     afterAll(async () => {
-//         await prisma.$disconnect();
-//     });
+    it("should return 200 given a recommendations array", async () => {
+        const recommendations = recommendationFactory();
+        await prisma.recommendation.create({
+            data: { ...recommendations[0] },
+        });
+        const response = await supertest(app).get("/recommendations");
+        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.body.length).not.toBeNull();
+    });
+});
 
-// });
+describe("GET /top/:amount tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+    it("should return 200 given a recommendations array", async () => {
+        const recommendations = recommendationFactory();
 
-// describe("POST /:id/upvote tests", () => {
-//     beforeEach(async () => {
-//         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
-//     });
-//     afterAll(async () => {
-//         await prisma.$disconnect();
-//     });
+        await prisma.recommendation.create({
+            data: { ...recommendations[0] },
+        });
 
-// });
+        const response = await supertest(app).get("/recommendations");
+        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.body.length).not.toBeNull();
+    });
+
+});
+
+describe("GET /:id tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+    it("should return 200 given a valid recommendation", async () => {
+        const recommendations = recommendationFactory();
+        const createdRecommendation = await prisma.recommendation.create({
+            data: { ...recommendations[0] },
+        });
+        const response = await supertest(app).get(
+            `/recommendations/${createdRecommendation.id}`
+        );
+        expect(response.body).toEqual(createdRecommendation);
+    });
+
+});
+
+describe("POST /:id/upvote tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+
+});
 
 // describe("POST /:id/downvote tests", () => {
 //     beforeEach(async () => {
