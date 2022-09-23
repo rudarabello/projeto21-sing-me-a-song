@@ -40,15 +40,28 @@ describe("POST /recommendations tests", () => {
     });
 });
 
-// describe("GET /recommendations tests", () => {
-//     beforeEach(async () => {
-//         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
-//     });
-//     afterAll(async () => {
-//         await prisma.$disconnect();
-//     });
+describe("POST /recommendations/:id/upvote tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
 
-// });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+
+    it("should return 200 given a valid recommendation", async () => {
+        const recommendations = recommendationFactory();
+
+        const createdRecommendation = await prisma.recommendation.create({
+            data: { ...recommendations[0] },
+        });
+
+        const response = await supertest(app).post(
+            `/recommendations/${createdRecommendation.id}/upvote`
+        );
+        expect(response.status).toEqual(200);
+    });
+});
 
 // describe("GET/random tests", () => {
 //     beforeEach(async () => {
