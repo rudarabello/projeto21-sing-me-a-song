@@ -5,14 +5,16 @@ export default function recommendationFactory() {
             youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
         },
         {
-            name: "Home page",
-            youtubeLink: "https://www.youtube.com/",
-            score: 234,
+            name: "Chitãozinho E Xororó - Evidências",
+            youtubeLink:
+                "https://www.youtube.com/watch?v=ePjtnSPFWK8&ab_channel=CHXVEVO",
+            score: 245,
         },
         {
-            name: "Home page",
-            youtubeLink: "https://www.youtube.com/",
-            score: 250,
+            name: "STARSET - UNVEILING THE ARCHITECTURE",
+            youtubeLink:
+                "https://www.youtube.com/watch?v=qr4HxlCx4hA&list=PLFd7LxIsegi0E-QtSUV-INVojiEtPV8iI",
+            score: 112,
         },
     ];
     return recommendations;

@@ -2,6 +2,7 @@ import supertest from "supertest";
 import app from "../../src/app";
 import { prisma } from "../../src/database";
 import recommendationFactory from "../factory/createRecomendation";
+import recommendationsAmount from "../factory/createRecommendationsAmount";
 
 describe("POST /recommendations tests", () => {
     beforeEach(async () => {
@@ -129,6 +130,27 @@ describe("GET /recommendations/:id tests", () => {
     });
 });
 
+describe("GET /recommendations/random tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
+
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+
+    it("should return 200 given a score more or equal than 10", async () => {
+        const recommendations = recommendationFactory();
+
+        const createdMusic = await prisma.recommendation.create({
+            data: { ...recommendations[0], score: 245 },
+        });
+
+        const response = await supertest(app).get("/recommendations/random");
+        expect(response.body).toEqual(createdMusic);
+    });
+});
+
 describe("GET /top/:amount tests", () => {
     beforeEach(async () => {
         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
@@ -170,7 +192,7 @@ describe("GET /:id tests", () => {
 
 });
 
-describe("POST /:id/upvote tests", () => {
+describe("GET /recommendations/top/:amount tests", () => {
     beforeEach(async () => {
         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
     });
@@ -178,14 +200,18 @@ describe("POST /:id/upvote tests", () => {
         await prisma.$disconnect();
     });
 
+    it("should return 200 given a set amount musics", async () => {
+        const recommendations = recommendationsAmount();
+        const amount = 2;
+
+        await prisma.recommendation.createMany({
+            data: [
+                { ...recommendations[0] },
+                { ...recommendations[1] },
+            ],
+        });
+
+        const response = await supertest(app).get(`/recommendations/top/${amount}`);
+        expect(response.body.length).toBeGreaterThanOrEqual(amount);
+    });
 });
-
-// describe("POST /:id/downvote tests", () => {
-//     beforeEach(async () => {
-//         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
-//     });
-//     afterAll(async () => {
-//         await prisma.$disconnect();
-//     });
-
-// });
