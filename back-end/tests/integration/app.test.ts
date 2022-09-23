@@ -106,6 +106,29 @@ describe("GET /recommendations tests", () => {
     });
 });
 
+describe("GET /recommendations/:id tests", () => {
+    beforeEach(async () => {
+        await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+    });
+
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
+
+    it("should return 200 given a valid recommendation", async () => {
+        const recommendations = recommendationFactory();
+
+        const createdRecommendation = await prisma.recommendation.create({
+            data: { ...recommendations[0] },
+        });
+
+        const response = await supertest(app).get(
+            `/recommendations/${createdRecommendation.id}`
+        );
+        expect(response.body).toEqual(createdRecommendation);
+    });
+});
+
 describe("GET /top/:amount tests", () => {
     beforeEach(async () => {
         await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
