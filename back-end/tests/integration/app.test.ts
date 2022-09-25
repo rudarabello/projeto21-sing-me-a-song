@@ -34,10 +34,15 @@ describe("POST /recommendations tests", () => {
         expect(response.status).toEqual(422);
     });
 
-    it("should return 422 given an empty body", async () => {
-        const musics = {};
-        const response = await supertest(app).post("/recommendations").send(musics);
-        expect(response.status).toEqual(422);
+    it("should return 409: conflict with unique constraint", async () => {
+        const recommendations = recommendationFactory();
+        await supertest(app)
+            .post("/recommendations/")
+            .send(recommendations[0]);
+        const result = await supertest(app)
+            .post("/recommendations/")
+            .send(recommendations[0]);
+        expect(result.status).toBe(409);
     });
 });
 
@@ -104,6 +109,10 @@ describe("GET /recommendations tests", () => {
         const response = await supertest(app).get("/recommendations");
         expect(response.body.length).toBeGreaterThan(0);
         expect(response.body.length).not.toBeNull();
+    });
+    it("should pick a random song", async () => {
+        const result = await supertest(app).get("/recommendations/random");
+        expect(result.status).toBe(404);
     });
 });
 
