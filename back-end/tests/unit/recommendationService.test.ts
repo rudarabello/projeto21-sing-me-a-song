@@ -3,6 +3,16 @@ import { recommendationRepository } from "../../src/repositories/recommendationR
 import { recommendationService } from "../../src/services/recommendationsService.js";
 import recommendationsAmount from "../factory/createRecommendationsAmount.js";
 
+
+function mockMathRandom(number: number) {
+    const mockMathRandom = Object.create(global.Math);
+    mockMathRandom.random = () => number;
+    global.Math = mockMathRandom;
+
+    return mockMathRandom;
+}
+
+
 describe("Recommendations service test", () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -52,4 +62,14 @@ describe("Recommendations service test", () => {
         );
         expect(remove).toHaveBeenCalledTimes(1);
     });
+    it("should not found recommendation getRandom", async () => {
+        mockMathRandom(1);
+        jest.spyOn(recommendationService, "getScoreFilter").mockReturnValue("lte");
+        jest.spyOn(recommendationService, "getByScore").mockResolvedValue([]);
+        jest.spyOn(recommendationRepository, "findAll").mockResolvedValue([]);
+        expect(async () => {
+            await recommendationService.getRandom();
+        }).rejects.toEqual({ message: "", type: "not_found" });
+    });
+
 })
