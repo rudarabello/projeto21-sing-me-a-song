@@ -1,6 +1,6 @@
 import { jest } from "@jest/globals";
-import { recommendationService } from "../../src/services/recommendationsService.js";
 import { recommendationRepository } from "../../src/repositories/recommendationRepository.js";
+import { recommendationService } from "../../src/services/recommendationsService.js";
 import recommendationsAmount from "../factory/createRecommendationsAmount.js";
 
 describe("Recommendations service test", () => {
@@ -31,6 +31,25 @@ describe("Recommendations service test", () => {
             type: "conflict",
         });
     });
-
-
+    it("should remove recommendation downvote", async () => {
+        const recommendation = recommendationsAmount();
+        jest
+            .spyOn(recommendationRepository, "find")
+            .mockResolvedValue(recommendation[2]);
+        jest
+            .spyOn(recommendationRepository, "updateScore")
+            .mockResolvedValue(recommendation[2]);
+        const remove = jest
+            .spyOn(recommendationRepository, "remove")
+            .mockResolvedValue(null);
+        await recommendationService.downvote(recommendation[2].id);
+        expect(recommendationRepository.updateScore).toBeCalledWith(
+            recommendation[2].id,
+            "decrement"
+        );
+        expect(recommendationRepository.remove).toBeCalledWith(
+            recommendation[2].id
+        );
+        expect(remove).toHaveBeenCalledTimes(1);
+    });
 })
