@@ -18,18 +18,27 @@ describe("Recommendations service test", () => {
         jest.clearAllMocks();
         jest.resetAllMocks();
     });
+
+
+
     it("should not found recommendation upvote", async () => {
         jest.spyOn(recommendationRepository, "find").mockResolvedValue(null);
         expect(async () => {
             await recommendationService.upvote(1);
         }).rejects.toEqual({ message: "", type: "not_found" });
     });
+
+
+
     it("should not found recommendation downvote", async () => {
         jest.spyOn(recommendationRepository, "find").mockResolvedValue(null);
         expect(async () => {
             await recommendationService.downvote(1);
         }).rejects.toEqual({ message: "", type: "not_found" });
     });
+
+
+
     it("should conflict recommendation insert", async () => {
         const recommendation = recommendationsAmount();
         jest.spyOn(recommendationRepository, "findByName")
@@ -41,6 +50,9 @@ describe("Recommendations service test", () => {
             type: "conflict",
         });
     });
+
+
+
     it("should remove recommendation downvote", async () => {
         const recommendation = recommendationsAmount();
         jest
@@ -62,6 +74,9 @@ describe("Recommendations service test", () => {
         );
         expect(remove).toHaveBeenCalledTimes(1);
     });
+
+
+
     it("should not found recommendation getRandom", async () => {
         mockMathRandom(1);
         jest.spyOn(recommendationService, "getScoreFilter").mockReturnValue("lte");
@@ -72,4 +87,18 @@ describe("Recommendations service test", () => {
         }).rejects.toEqual({ message: "", type: "not_found" });
     });
 
-})
+
+    
+    it("should not found recommendation getRandom", async () => {
+        mockMathRandom(0.3);
+        const recommendation = recommendationsAmount();
+        jest
+            .spyOn(recommendationService, "getScoreFilter")
+            .mockReturnValueOnce("gt");
+        jest
+            .spyOn(recommendationRepository, "findAll")
+            .mockResolvedValue(recommendation);
+        await recommendationService.getRandom();
+        expect(recommendationRepository.findAll).toBeCalledTimes(1);
+    });
+});
