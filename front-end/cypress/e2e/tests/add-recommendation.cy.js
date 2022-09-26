@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 
 beforeEach(() => {
     cy.resetDatabase();
@@ -18,6 +18,5 @@ describe('Test post on recomendations', () => {
         cy.get('#submit').click();
         cy.wait('@newRecommendation');
         cy.contains(recommendation.name).should('be.visible');
-
     });
 });

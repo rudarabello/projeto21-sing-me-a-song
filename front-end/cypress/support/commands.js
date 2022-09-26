@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -10,11 +11,20 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+// eslint-disable-next-line no-undef
+Cypress.Commands.add('resetDatabase', () => {
+    // eslint-disable-next-line no-undef
+    cy.request('POST', 'http://localhost:5000/e2e/reset');
+});
+
+Cypress.Commands.add('addRecommendation', () => {
+    const recommendation = {
+        name: 'How to make 1M',
+        youtubeLink: 'https://youtu.be/CK_BCMA9yoY',
+    };
+
+    cy.request('POST', 'http://localhost:5000/recommendations', recommendation);
+});
 //
 //
 // -- This is a dual command --
@@ -23,7 +33,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add("resetDatabase", () => {
-    // eslint-disable-next-line no-undef
-    cy.request("POST", "http://localhost:5002/e2e/reset");
-});

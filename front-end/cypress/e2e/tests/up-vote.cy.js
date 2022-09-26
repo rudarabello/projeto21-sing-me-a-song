@@ -3,8 +3,8 @@ beforeEach(() => {
     cy.resetDatabase();
 });
 
-describe('downvote a recommendation', () => {
-    it('downvote successfully', () => {
+describe('upvote a recommendation', () => {
+    it('upvote successfully', () => {
         cy.visit('http://localhost:3000');
 
         cy.addRecommendation();
@@ -12,10 +12,10 @@ describe('downvote a recommendation', () => {
         cy.intercept('GET', '/recommendations').as('getRecommendations');
         cy.wait('@getRecommendations');
 
-        cy.get('[data-cy=downvote]').click();
+        cy.get('[data-cy=upvote]').click();
 
         cy.get('[data-cy=score]').should(($p) => {
-            expect($p).to.contain('-1');
+            expect($p).to.contain('1');
         });
     });
 });

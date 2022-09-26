@@ -1,7 +1,7 @@
 export default function recommendationFactory() {
     const recommendation = {
-        name: "Falamansa - Xote dos Milagres",
-        youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+        name: 'Falamansa - Xote dos Milagres',
+        youtubeLink: 'https://www.youtube.com/watch?v=chwyjJbcs1Y',
     };
 
     return recommendation;

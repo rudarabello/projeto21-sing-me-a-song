@@ -1,5 +1,4 @@
 describe('Home Page', () => {
-
     it('should navigate to the right pages', () => {
         cy.visit('http://localhost:3000');
         cy.contains('Top').click();
@@ -9,5 +8,5 @@ describe('Home Page', () => {
         cy.contains('Home').click();
         cy.url().should('eq', 'http://localhost:3000/');
         cy.end();
-    })
-})
+    });
+});
