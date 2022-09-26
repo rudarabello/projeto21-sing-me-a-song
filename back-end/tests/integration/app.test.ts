@@ -114,6 +114,10 @@ describe("GET /recommendations tests", () => {
         const result = await supertest(app).get("/recommendations/random");
         expect(result.status).toBe(404);
     });
+    it("should return 500 on try get song by string id", async()=>{
+        const result = await supertest(app).get(`/recommendations/aaa`);
+        expect(result.status).toBe(500);
+    });
 });
 
 describe("GET /recommendations/:id tests", () => {
