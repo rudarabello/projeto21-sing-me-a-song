@@ -1,5 +1,5 @@
 
-export default function recommendationsAmount() {
+export default function recommendationsToMock() {
     const recommendations = [
         {
             "id": 1,

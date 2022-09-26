@@ -1,7 +1,7 @@
 import { jest } from "@jest/globals";
 import { recommendationRepository } from "../../src/repositories/recommendationRepository.js";
 import { recommendationService } from "../../src/services/recommendationsService.js";
-import recommendationsAmount from "../factory/createRecommendationsAmount.js";
+import recommendationsToMock from "../factory/createRecommendationsToMock.js";
 
 
 function mockMathRandom(number: number) {
@@ -40,7 +40,7 @@ describe("Recommendations service test", () => {
 
 
     it("should conflict recommendation insert", async () => {
-        const recommendation = recommendationsAmount();
+        const recommendation = recommendationsToMock();
         jest.spyOn(recommendationRepository, "findByName")
             .mockResolvedValue(recommendation[0]);
         expect(async () => {
@@ -54,7 +54,7 @@ describe("Recommendations service test", () => {
 
 
     it("should remove recommendation downvote", async () => {
-        const recommendation = recommendationsAmount();
+        const recommendation = recommendationsToMock();
         jest
             .spyOn(recommendationRepository, "find")
             .mockResolvedValue(recommendation[2]);
@@ -88,10 +88,10 @@ describe("Recommendations service test", () => {
     });
 
 
-    
+
     it("should not found recommendation getRandom", async () => {
         mockMathRandom(0.3);
-        const recommendation = recommendationsAmount();
+        const recommendation = recommendationsToMock();
         jest
             .spyOn(recommendationService, "getScoreFilter")
             .mockReturnValueOnce("gt");

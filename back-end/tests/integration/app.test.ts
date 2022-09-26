@@ -2,7 +2,7 @@ import supertest from "supertest";
 import app from "../../src/app";
 import { prisma } from "../../src/database";
 import recommendationFactory from "../factory/createRecomendation";
-import recommendationsAmount from "../factory/createRecommendationsAmount";
+import recommendationsToMock from "../factory/createRecommendationsToMock";
 
 describe("POST /recommendations tests", () => {
     beforeEach(async () => {
@@ -210,7 +210,7 @@ describe("GET /recommendations/top/:amount tests", () => {
     });
 
     it("should return 200 given a set amount musics", async () => {
-        const recommendations = recommendationsAmount();
+        const recommendations = recommendationsToMock();
         const amount = 2;
 
         await prisma.recommendation.createMany({
