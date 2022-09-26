@@ -23,3 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("resetDatabase", () => {
+    // eslint-disable-next-line no-undef
+    cy.request("POST", "http://localhost:5000/e2e/reset");
+});

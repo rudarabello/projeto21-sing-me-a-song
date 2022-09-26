@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
 
+beforeEach(() => {
+    cy.resetDatabase();
+});
+
 describe('Test post on recomendations', () => {
     const recommendation = {
         name: faker.name.firstName(),
