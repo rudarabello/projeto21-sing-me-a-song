@@ -25,5 +25,5 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add("resetDatabase", () => {
     // eslint-disable-next-line no-undef
-    cy.request("POST", "http://localhost:5000/e2e/reset");
+    cy.request("POST", "http://localhost:5002/e2e/reset");
 });
