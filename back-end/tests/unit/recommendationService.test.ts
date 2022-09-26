@@ -55,11 +55,9 @@ describe("Recommendations service test", () => {
 
     it("should remove recommendation downvote", async () => {
         const recommendation = recommendationsToMock();
-        jest
-            .spyOn(recommendationRepository, "find")
+        jest.spyOn(recommendationRepository, "find")
             .mockResolvedValue(recommendation[2]);
-        jest
-            .spyOn(recommendationRepository, "updateScore")
+        jest.spyOn(recommendationRepository, "updateScore")
             .mockResolvedValue(recommendation[2]);
         const remove = jest
             .spyOn(recommendationRepository, "remove")
@@ -92,11 +90,9 @@ describe("Recommendations service test", () => {
     it("should not found recommendation getRandom", async () => {
         mockMathRandom(0.3);
         const recommendation = recommendationsToMock();
-        jest
-            .spyOn(recommendationService, "getScoreFilter")
+        jest.spyOn(recommendationService, "getScoreFilter")
             .mockReturnValueOnce("gt");
-        jest
-            .spyOn(recommendationRepository, "findAll")
+        jest.spyOn(recommendationRepository, "findAll")
             .mockResolvedValue(recommendation);
         await recommendationService.getRandom();
         expect(recommendationRepository.findAll).toBeCalledTimes(1);
