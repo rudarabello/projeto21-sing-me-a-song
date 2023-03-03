@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
 beforeEach(() => {
-  cy.resetDatabase()
-})
+    cy.resetDatabase();
+});
 
 describe('random page', () => {
-  it('go to random page', () => {
-    cy.visit('http://localhost:3000')
+    it('go to random page', () => {
+        cy.visit('http://localhost:3000');
 
-    cy.get('[data-cy=random]').click()
+        cy.get('[data-cy=random]').click();
 
-    cy.url().should('equal', 'http://localhost:3000/random')
-  })
-})
+        cy.url().should('equal', 'http://localhost:3000/random');
+    });
+});
