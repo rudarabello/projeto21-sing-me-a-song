@@ -31,35 +31,32 @@ Sing me a Song is a application for videos recommendations. The recommendation i
 git clone https://github.com/rudarabello/projeto21-sing-me-a-song
 ```
 
-2. Go to the project directory
+2. Go to the front-end and back-end directory 
 
-```
- cd sing-me-a-song
-```
 
-3. Install dependencies
+3. Install dependencies in both
 
 ```
 npm i
 ```
 
-4. Run project with
+4. Run back-end with
 
 ```
-npm start
+npm run dev
 ```
 
-5. You can optionally build the project running
+5. Run front-end with
 
 ```
-npm run build
+npm run start
 ```
 
-6. Finally access `http://localhost:3000` on your browser (port number may vary in some cases)
+6. Finally access `http://localhost:3000` on your browser
 
 ## How to run the tests
 
-1. Run cypress
+7. Run cypress
 
 ```bash
 npx cypress open
